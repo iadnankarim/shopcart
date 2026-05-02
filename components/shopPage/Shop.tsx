@@ -1,7 +1,7 @@
 "use client";
 import { BRANDS_QUERYResult, Category, Product } from "@/sanity.types";
 import { client } from "@/sanity/lib/client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Container from "../Container";
 import Title from "../Title";
 import CategoryList from "./CategoryList";
@@ -28,7 +28,7 @@ const Shop = ({ categories, brands }: Props) => {
   );
   const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
       // Extract min and max price from selectedPrice
@@ -72,10 +72,11 @@ const Shop = ({ categories, brands }: Props) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCategory, selectedBrand, selectedPrice]);
+
   useEffect(() => {
     fetchProducts();
-  }, [selectedCategory, selectedBrand, selectedPrice]);
+  }, [fetchProducts]);
 
   return (
     <div className="bg-white border-t">

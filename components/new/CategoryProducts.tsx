@@ -40,7 +40,7 @@ const CategoryProducts = ({ categories, slug }: Props) => {
 
   useEffect(() => {
     fetchProducts(currentSlug);
-  }, [router]);
+  }, [currentSlug]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCategoryChange = (newSlug: string) => {
     if (newSlug === currentSlug) return; // Prevent unnecessary updates
